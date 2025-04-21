@@ -57,6 +57,9 @@
     <ClInclude Include="pugixml.hpp">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
+    <ClInclude Include="TaxService.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -79,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="pugixml.cpp">
       <Filter>Файлы ресурсов</Filter>
+    </ClCompile>
+    <ClCompile Include="TaxService.cpp">
+      <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
