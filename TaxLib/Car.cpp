@@ -1,13 +1,13 @@
 #include "pch.h"
-#include "json.hpp"
 
 using json = nlohmann::json;
-inline void Car::fromJson(nlohmann::json json)
+
+void Car::fromJson(nlohmann::json json)
 {
 	json["worth"].get_to(worth);
 	json["horsepower"].get_to(horsepower);
 }
-inline nlohmann::json Car::toJson()
+nlohmann::json Car::toJson()
 {
 	json JsonTaxObject;
 	JsonTaxObject["proprty_tax"] = this->CalculationPropertyTax();

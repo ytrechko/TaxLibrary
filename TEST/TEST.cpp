@@ -1,13 +1,15 @@
 ﻿#include "../TaxLib/pch.h"
+
+#include <fstream>
 using namespace std;
 int main()
 {
-	Owner own("pop", "123");
-	own.addProperty(new Apartment(12, 23));
-	own.addProperty(new Car(1222, 123));
-	own.addProperty(new CountryHouse(3332, 55523));
-	cout << own << endl;
-	own.removeProperty(0);
-	cout << own << endl;
+	ifstream in("in.json");
+	nlohmann::json j;
+	in >> j;
+	Owner own;
+	own.fromJson(j);
+	j = own.toJson();
+	int i;
 
 }

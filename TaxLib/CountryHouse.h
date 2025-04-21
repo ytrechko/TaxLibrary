@@ -2,6 +2,8 @@
 #include "Property.h"
 #include "BasicValueTax.h"
 #include <iostream>
+#include "json.hpp"
+
 class CountryHouse : public Property
 {
 	unsigned int distanceFromCity;
