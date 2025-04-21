@@ -17,7 +17,21 @@ nlohmann::json Apartment::toJson()
 	PropJsonObject[this->propertyName()] = JsonTaxObject;
 	json FileObject = JsonTaxObject;
 	return FileObject;
-};
+}
+void Apartment::fromXml(pugi::xml_node& xml)
+{
+	if (!xml.attribute("worth").as_double()) { throw std::runtime_error("Ошибка чтения worth"); }
+	worth = xml.attribute("worth").as_double();
+	if (!xml.attribute("square").as_double()) { throw std::runtime_error("Ошибка чтения square"); }
+	square = xml.attribute("square").as_double();
+}
+
+void Apartment::toXml(pugi::xml_node& XmlObj)
+{
+	pugi::xml_node XmlNode = XmlObj.append_child("Apartment");
+	XmlNode.append_attribute("property_tax") = this->CalculationPropertyTax();
+	XmlNode.append_child("income_tax").text().set(this->CalculationIncomeTax());
+}
 
 double Apartment::CalculationPropertyTax()
 {

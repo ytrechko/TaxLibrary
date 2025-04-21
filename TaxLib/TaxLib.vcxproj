@@ -145,11 +145,14 @@
     <ClInclude Include="CountryHouse.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Ijsonio.h" />
+    <ClInclude Include="Ixmlio.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Owner.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Property.h" />
     <ClInclude Include="PropertySimpleFactory.h" />
+    <ClInclude Include="pugiconfig.hpp" />
+    <ClInclude Include="pugixml.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Apartment.cpp" />
@@ -163,6 +166,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Property.cpp" />
+    <ClCompile Include="pugixml.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

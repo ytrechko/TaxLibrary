@@ -3,6 +3,8 @@
 #include "BasicValueTax.h"
 #include <iostream>
 #include "json.hpp"
+#include "pugixml.hpp"
+
 
 class Apartment : public Property
 {
@@ -14,6 +16,9 @@ public:
 
 	void fromJson(nlohmann::json json);
 	nlohmann::json toJson();
+
+	void fromXml(pugi::xml_node& xml);
+	void toXml(pugi::xml_node& XmlObj);
 
 	inline Property* cloneProperty() { return new Apartment(*this); }
 	inline std::string propertyName() const { return "Apartment"; }

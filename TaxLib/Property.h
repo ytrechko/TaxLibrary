@@ -2,8 +2,9 @@
 #include <string>
 #include "BasicValueTax.h"
 #include "Ijsonio.h"
+#include "Ixmlio.h"
 #include <iostream>
-class Property : public Ijsonio
+class Property : public Ijsonio, public Ixmlio
 {
 protected:
 	double worth;

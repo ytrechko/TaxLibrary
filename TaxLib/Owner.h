@@ -8,8 +8,10 @@
 #include "Property.h"
 #include "CountryHouse.h"
 #include "Ijsonio.h"
+#include "Ixmlio.h"
 
-class Owner : public Ijsonio
+
+class Owner : public Ijsonio, public Ixmlio
 {
 	std::string fullname;
 	std::string inn;
@@ -24,6 +26,9 @@ public:
 	nlohmann::json toJson();
 	void fromJson(nlohmann::json jOwner);
 
+	void fromXml(pugi::xml_node& ovner);
+	void toXml(pugi::xml_node& xmlOwner);
+
 	void addProperty(Property* prop);
 	void removeProperty(int indexProperty);
 	double totalSumTax() const;
@@ -36,7 +41,5 @@ public:
 std::vector<Owner> FromJsonFileToVector(std::string const& filename);
 void ToJsonFile(std::string const& filename, std::vector<Owner>& owners);
 
-
-
-
-
+std::vector<Owner> FromXmlFileToVector(std::string const& filename);
+void ToXmlFile(std::string const& filename, std::vector<Owner>& owners);

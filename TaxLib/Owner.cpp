@@ -2,6 +2,7 @@
 #include "PropertySimpleFactory.h"
 #include <vector>
 #include <fstream>
+
 using namespace std;
 
 using json = nlohmann::json;
@@ -73,6 +74,47 @@ void Owner::fromJson(nlohmann::json jOwner)
 			prop->fromJson(countryhouse);
 			properties.push_back(prop);
 		}
+	}
+}
+
+void Owner::fromXml(pugi::xml_node& ovner)
+{
+	fullname = ovner.attribute("fullname").as_string();
+	inn = ovner.child("inn").text().as_string();
+	for (pugi::xml_node propertyNode : ovner.child("properties").children("Property")) {
+		pugi::xml_node prop = propertyNode.first_child();
+
+		string nameProp = prop.name();
+		if (nameProp == "Car") {
+			Property* newProp = PropertySimpleFactory::createProperty(nameProp);
+			newProp->fromXml(prop);
+			properties.push_back(newProp);
+		}
+		else if (nameProp == "Apartment") {
+			Property* newProp = PropertySimpleFactory::createProperty(nameProp);
+			newProp->fromXml(prop);
+			properties.push_back(newProp);
+
+		}
+		else if (nameProp == "CountryHouse") {
+			Property* newProp = PropertySimpleFactory::createProperty(nameProp);
+			newProp->fromXml(prop);
+			properties.push_back(newProp);
+
+		}
+	}
+}
+
+void Owner::toXml(pugi::xml_node& xmlOwner)
+{
+	xmlOwner.append_attribute("fullname") = fullname.c_str();
+	xmlOwner.append_child("inn").text().set(inn.c_str());
+	xmlOwner.append_child("sum_tax").text().set(this->totalSumTax());
+	pugi::xml_node xmlProps = xmlOwner.append_child("Properties");
+	for (Property* prop : properties) {
+		pugi::xml_node xmlProp = xmlProps.append_child("Property");
+		prop->toXml(xmlProp);
+
 	}
 }
 
@@ -152,4 +194,36 @@ void ToJsonFile(std::string const& filename, std::vector<Owner>& owners)
 	json FileObject = JsonOwnersObject;
 	out << FileObject.dump(2);
 	out.close();
+}
+
+std::vector<Owner> FromXmlFileToVector(std::string const& filename)
+{
+	pugi::xml_document XmlDoc;
+	if (!XmlDoc.load_file(filename.c_str())) {
+		throw runtime_error("Ошибка открытия файла -> " + filename + '\n');
+	}
+
+	pugi::xml_node xmlOwners = XmlDoc.child("Owners");
+	if (!xmlOwners) {
+		throw runtime_error("Ошибка чтения файла / ошибка чтения Owners");
+	}
+
+	vector<Owner> Owners;
+	for (pugi::xml_node xmlOwner : xmlOwners.children("Owner")) {
+		Owner owner;
+		owner.fromXml(xmlOwner);
+		Owners.push_back(owner);
+	}
+	return Owners;
+}
+
+void ToXmlFile(std::string const& filename, std::vector<Owner>& owners)
+{
+	pugi::xml_document xmlDoc;
+	pugi::xml_node xmlOwners = xmlDoc.append_child("Owners");
+	for (Owner& owner : owners) {
+		pugi::xml_node xmlOwner = xmlOwners.append_child("Owner");
+		owner.toXml(xmlOwner);
+	}
+	xmlDoc.save_file(filename.c_str());
 }

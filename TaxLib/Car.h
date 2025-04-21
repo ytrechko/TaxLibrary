@@ -3,6 +3,8 @@
 #include "BasicValueTax.h"
 #include <iostream>
 #include "json.hpp"
+#include "pugixml.hpp"
+
 class Car : public Property
 {
 	double horsepower;
@@ -13,6 +15,9 @@ public:
 
 	void fromJson(nlohmann::json json);
 	nlohmann::json toJson();
+
+	void fromXml(pugi::xml_node& xml);
+	void toXml(pugi::xml_node& XmlObj);
 
 	inline std::string propertyName() const { return "Car"; }
 	Property* cloneProperty() { return new Car(*this); }

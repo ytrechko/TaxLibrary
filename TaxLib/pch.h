@@ -15,5 +15,7 @@
 #include "CountryHouse.h"
 #include "Owner.h"
 #include "json.hpp"
+#include "pugixml.hpp"
+
 
 #endif //PCH_H

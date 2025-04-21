@@ -19,6 +19,21 @@ nlohmann::json CountryHouse::toJson()
 	return FileObject;
 }
 
+void CountryHouse::fromXml(pugi::xml_node& xml)
+{
+	if (!xml.attribute("worth").as_double()) { throw std::runtime_error("Ошибка чтения worth"); }
+	worth = xml.attribute("worth").as_double();
+	if (!xml.attribute("distanceFromCity").as_double()) { throw std::runtime_error("Ошибка чтения distanceFromCity"); }
+	distanceFromCity = xml.attribute("distanceFromCity").as_double();
+}
+
+void CountryHouse::toXml(pugi::xml_node& xmlObj)
+{
+	pugi::xml_node XmlNode = xmlObj.append_child("CountryHouse");
+	XmlNode.append_attribute("property_tax") = this->CalculationPropertyTax();
+	XmlNode.append_child("income_tax").text().set(this->CalculationIncomeTax());
+}
+
 double CountryHouse::CalculationPropertyTax()
 {
 	return (distanceFromCity <= TAX_RATES::LIMIT_DISTANCE_FROM_CITY) ?

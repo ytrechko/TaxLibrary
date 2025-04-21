@@ -16,7 +16,21 @@ nlohmann::json Car::toJson()
 	PropJsonObject[this->propertyName()] = JsonTaxObject;
 	json FileObject = JsonTaxObject;
 	return FileObject;
-};
+}
+void Car::fromXml(pugi::xml_node& xml)
+{
+	if (!xml.attribute("worth").as_double()) { throw std::runtime_error("Ошибка чтения worth"); }
+	worth = xml.attribute("worth").as_double();
+	if (!xml.attribute("horsepower").as_double()) { throw std::runtime_error("Ошибка чтения horsepower"); }
+	horsepower = xml.attribute("horsepower").as_double();
+}
+
+void Car::toXml(pugi::xml_node& XmlObj)
+{
+	pugi::xml_node XmlNode = XmlObj.append_child("Car");
+	XmlNode.append_attribute("property_tax") = this->CalculationPropertyTax();
+	XmlNode.append_child("income_tax").text().set(this->CalculationIncomeTax());
+}
 
 double Car::CalculationPropertyTax()
 {
