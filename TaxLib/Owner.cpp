@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "PropertySimpleFactory.h"
-
+#include <vector>
+#include <fstream>
+using namespace std;
 
 using json = nlohmann::json;
 
@@ -112,4 +114,42 @@ std::ostream& operator<<(std::ostream& out, Owner& owner)
 		out << "Name property: " << prop->propertyName() << ' ' << prop->getWorth() << '\n';
 	}
 	return out;
+}
+
+std::vector<Owner> FromJsonFileToVector(std::string const& filename)
+{
+	ifstream in(filename);
+	if (!in.is_open()) {
+		throw runtime_error("Error open file -> " + filename + '\n');
+	}
+	json Data;
+	in >> Data;
+	in.close();
+
+	json VectorOwners = Data["Owners"];
+	vector<Owner> Owners;
+
+	for (json const& it : VectorOwners) {
+		Owner own;
+		own.fromJson(it);
+		Owners.push_back(own);
+	}
+	return Owners;
+}
+
+void ToJsonFile(std::string const& filename, std::vector<Owner>& owners)
+{
+	json VectorOwners = json::array();
+	for (Owner& owner : owners) {
+		VectorOwners.push_back(owner.toJson());
+	}
+	json JsonOwnersObject;
+	JsonOwnersObject["Owners"] = VectorOwners;
+	ofstream out(filename);
+	if (!out.is_open()) {
+		throw runtime_error("Error open file -> " + filename + '\n');
+	}
+	json FileObject = JsonOwnersObject;
+	out << FileObject.dump(2);
+	out.close();
 }

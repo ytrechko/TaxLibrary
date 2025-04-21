@@ -33,6 +33,9 @@ public:
 	friend std::ostream& operator<<(std::ostream& out, Owner& owner);
 };
 
+std::vector<Owner> FromJsonFileToVector(std::string const& filename);
+void ToJsonFile(std::string const& filename, std::vector<Owner>& owners);
+
 
 
 
