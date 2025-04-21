@@ -9,8 +9,11 @@ public:
 	Car() :horsepower(0) {};
 	Car(Car const& cr): Property(cr.worth), horsepower(cr.horsepower) {}
 	Car(double worth, double horsepower) : Property(worth), horsepower(horsepower) {}
-	inline std::string propertyName() const { return "Car"; }
 
+	inline void fromJson(nlohmann::json json);
+	inline nlohmann::json toJson();
+
+	inline std::string propertyName() const { return "Car"; }
 	Property* cloneProperty() { return new Car(*this); }
 
 

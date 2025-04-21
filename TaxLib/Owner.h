@@ -7,7 +7,9 @@
 #include "Car.h"
 #include "Property.h"
 #include "CountryHouse.h"
-class Owner 
+#include "Ijsonio.h"
+
+class Owner : public Ijsonio
 {
 	std::string fullname;
 	std::string inn;
@@ -18,6 +20,9 @@ public:
 
 	Owner(Owner const& own);
 	Owner& operator=(Owner const& own);
+
+	nlohmann::json toJson();
+	void fromJson(nlohmann::json jOwner);
 
 	void addProperty(Property* prop);
 	void removeProperty(int indexProperty);

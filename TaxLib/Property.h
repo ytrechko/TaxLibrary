@@ -1,8 +1,9 @@
 #pragma once
 #include <string>
 #include "BasicValueTax.h"
+#include "Ijsonio.h"
 #include <iostream>
-class Property 
+class Property : public Ijsonio
 {
 protected:
 	double worth;

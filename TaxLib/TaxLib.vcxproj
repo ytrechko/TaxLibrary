@@ -144,9 +144,12 @@
     <ClInclude Include="Car.h" />
     <ClInclude Include="CountryHouse.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Ijsonio.h" />
+    <ClInclude Include="json.hpp" />
     <ClInclude Include="Owner.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Property.h" />
+    <ClInclude Include="PropertySimpleFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Apartment.cpp" />
