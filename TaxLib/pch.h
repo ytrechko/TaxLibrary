@@ -8,6 +8,11 @@
 #define PCH_H
 
 // Добавьте сюда заголовочные файлы для предварительной компиляции
-#include "framework.h"
+
+#include "Property.h"
+#include "Car.h"
+#include "Apartment.h"
+#include "CountryHouse.h"
+#include "Owner.h"
 
 #endif //PCH_H
